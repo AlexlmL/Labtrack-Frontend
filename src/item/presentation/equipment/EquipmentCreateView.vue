@@ -44,31 +44,33 @@ async function submit() {
 </script>
 
 <template>
-  <div>
-    <h2>Create Equipment</h2>
+  <div class="page">
+    <div class="card">
+      <h2>Create Equipment</h2>
 
-    <form @submit.prevent="submit">
+      <form @submit.prevent="submit">
 
-      <div>
-        <label>Name</label>
-        <input v-model="name" />
-      </div>
+        <div class="form-row">
+          <label>Name</label>
+          <input v-model="name" />
+        </div>
 
-      <div>
-        <label>Serial Number</label>
-        <input v-model="serial" />
-      </div>
+        <div class="form-row">
+          <label>Serial Number</label>
+          <input v-model="serial" />
+        </div>
 
-      <div>
-        <label>Location</label>
-        <input v-model="location" />
-      </div>
+        <div class="form-row">
+          <label>Location</label>
+          <input v-model="location" />
+        </div>
 
-      <p v-if="error" style="color:red">{{ error }}</p>
+        <p v-if="error" style="color:red">{{ error }}</p>
 
-      <button type="submit" :disabled="loading">
-        {{ loading ? "Saving..." : "Save" }}
-      </button>
-    </form>
+        <button type="submit" :disabled="loading">
+          {{ loading ? "Saving..." : "Save" }}
+        </button>
+      </form>
+    </div>
   </div>
 </template>

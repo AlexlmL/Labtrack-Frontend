@@ -97,74 +97,95 @@ onMounted(load);
 </script>
 
 <template>
-  <div v-if="equipment">
-    <h2>Equipment detail</h2>
+  <div class="page">
 
-    <!-- BASIC INFO -->
-    <div>
-      <label>Name</label>
-      <input v-model="equipment.name" />
+    <div v-if="equipment" class="detail-grid">
+      <div class="card">
+        <h2 class="section-title">Equipment information</h2>
 
-      <label>Serial number</label>
-      <input v-model="equipment.serialNumber" />
+        <div class="form-row">
+          <label>Name</label>
+          <input v-model="equipment.name" />
+        </div>
 
-      <label>Location</label>
-      <input v-model="equipment.location" />
+        <div class="form-row">
+          <label>Serial number</label>
+          <input v-model="equipment.serialNumber" />
+        </div>
 
-      <button @click="saveEquipment">Save changes</button>
-      <button @click="removeEquipment">Delete equipment</button>
+        <div class="form-row">
+          <label>Location</label>
+          <input v-model="equipment.location" />
+        </div>
+
+        <div class="actions">
+          <button @click="saveEquipment">Save changes</button>
+          <button class="danger" @click="removeEquipment">Delete</button>
+        </div>
+      </div>
+      <div class="space-y">
+        <div class="card">
+          <h3 class="section-title">Status</h3>
+
+          <p>
+            Current:
+            <span class="badge" :class="equipment.status">
+              {{ equipment.status }}
+            </span>
+          </p>
+
+          <select v-model="newStatus">
+            <option disabled value="">Select…</option>
+            <option value="ACTIVE">ACTIVE</option>
+            <option value="IN_MAINTENANCE">IN_MAINTENANCE</option>
+            <option value="INACTIVE">INACTIVE</option>
+            <option value="OUT_OF_SERVICE">OUT_OF_SERVICE</option>
+          </select>
+
+          <button style="margin-top:10px" @click="updateStatus">
+            Update status
+          </button>
+        </div>
+        <div class="card">
+          <h3 class="section-title">Add maintenance</h3>
+
+          <div class="form-row">
+            <label>Description</label>
+            <input v-model="maintenanceDescription" />
+          </div>
+
+          <div class="form-row">
+            <label>Performed by</label>
+            <input v-model="maintenancePerformedBy" />
+          </div>
+
+          <button @click="addMaintenance">Add record</button>
+        </div>
+      </div>
     </div>
 
-    <!-- STATUS -->
-    <div>
-      <h3>Current status: {{ equipment.status }}</h3>
+    <div v-if="equipment" class="card" style="margin-top:16px">
+      <h3 class="section-title">Maintenance records</h3>
 
-      <select v-model="newStatus">
-        <option disabled value="">Select…</option>
-        <option value="ACTIVE">ACTIVE</option>
-        <option value="IN_MAINTENANCE">IN_MAINTENANCE</option>
-        <option value="INACTIVE">INACTIVE</option>
-        <option value="OUT_OF_SERVICE">OUT_OF_SERVICE</option>
-      </select>
-
-      <button @click="updateStatus">Update status</button>
-    </div>
-
-    <!-- MAINTENANCE -->
-    <div>
-      <h3>Add maintenance record</h3>
-
-      <input
-          placeholder="Description"
-          v-model="maintenanceDescription"
-      />
-
-      <input
-          placeholder="Performed by"
-          v-model="maintenancePerformedBy"
-      />
-
-      <button @click="addMaintenance">Add record</button>
-    </div>
-
-    <!-- LIST -->
-    <div>
-      <h3>Maintenance records</h3>
-
-      <div v-if="!equipment.maintenanceRecords || equipment.maintenanceRecords.length === 0">
+      <div
+          v-if="!equipment.maintenanceRecords || equipment.maintenanceRecords.length === 0"
+          class="empty-box"
+      >
         No maintenance records yet.
       </div>
 
-      <ul v-else>
+      <ul v-else class="timeline">
         <li v-for="m in equipment.maintenanceRecords" :key="m.id">
           <strong>{{ new Date(m.date).toLocaleDateString() }}</strong>
-          — {{ m.description }} ({{ m.performedBy }})
+          — {{ m.description }}
+          <span style="color: var(--muted)">({{ m.performedBy }})</span>
         </li>
       </ul>
     </div>
-  </div>
 
-  <div v-else>
-    Loading...
+    <div v-else>
+      Loading...
+    </div>
+
   </div>
 </template>

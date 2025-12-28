@@ -5,7 +5,7 @@ import EquipmentCreateView from "@/item/presentation/equipment/EquipmentCreateVi
 
 
 const routes = [
-    { path: "/equipment", component: EquipmentListView },
+    { path: "/", component: EquipmentListView },
     { path: "/equipment/new", component: EquipmentCreateView },
     { path: "/equipment/:id", component: EquipmentDetailView },
 ];
