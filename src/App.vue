@@ -1,11 +1,22 @@
 <script setup></script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <div>
+
+    <header style="padding: 12px; border-bottom: 1px solid #ddd;">
+      <h2>Equipment Management</h2>
+
+      <nav style="display: flex; gap: 12px;">
+        <router-link to="/equipment">Equipment</router-link>
+        <router-link to="/equipment/new">Create new</router-link>
+      </nav>
+    </header>
+
+    <main style="padding: 16px;">
+      <router-view />
+    </main>
+
+  </div>
 </template>
 
 <style scoped></style>
